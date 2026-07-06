@@ -11,6 +11,7 @@ public class Product {
         _id = id;
         _productname = productname;
         _sku = sku;
+        //12345
     }
     public Product(String productname, int sku) {
         _productname = productname;
