@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.database.SQLException;
 
 public class MyDBHandler extends SQLiteOpenHelper {
 
@@ -63,5 +64,25 @@ public class MyDBHandler extends SQLiteOpenHelper {
         int result = db.delete(TABLE_PRODUCTS, COLUMN_PRODUCTNAME + " = ?", new String[]{productName});
         db.close();
         return result > 0;
+    }
+
+    public boolean updateProduct(Product product) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(COLUMN_PRODUCTNAME, product.getProductName());
+        values.put(COLUMN_SKU, product.getSku());
+        int rows = db.update(TABLE_PRODUCTS, values, COLUMN_ID + " = ?", new String[]{String.valueOf(product.getId())});
+        db.close();
+        return rows > 0;
+    }
+
+    public boolean updateProduct(Product product) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(COLUMN_PRODUCTNAME, product.getProductName());
+        values.put(COLUMN_SKU, product.getSku());
+        int rows = db.update(TABLE_PRODUCTS, values, COLUMN_ID + " = ?", new String[]{String.valueOf(product.getId())});
+        db.close();
+        return rows > 0;
     }
 }
