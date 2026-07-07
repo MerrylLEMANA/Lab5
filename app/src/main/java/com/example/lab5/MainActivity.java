@@ -55,7 +55,7 @@ public class MainActivity extends AppCompatActivity {
         Product product = dbHandler.findProduct(name);
 
         if (product != null) {
-            idView.setText(String.valueOf(product.getID()));
+            idView.setText(String.valueOf(product.getId()));
             skuEdit.setText(String.valueOf(product.getSku()));
             Toast.makeText(this, "Product found!", Toast.LENGTH_SHORT).show();
         } else {

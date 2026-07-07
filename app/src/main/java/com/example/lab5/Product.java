@@ -5,7 +5,7 @@ public class Product {
     private String productName;
     private int sku;
 
-    // Constructeur par défaut (nécessaire pour Firebase)
+    // Constructeur par défaut
     public Product() {}
 
     // Constructeur avec paramètres
@@ -19,7 +19,7 @@ public class Product {
         return id;
     }
 
-    public void setID(int id) {
+    public void setId(int id) {
         this.id = id;
     }
 
