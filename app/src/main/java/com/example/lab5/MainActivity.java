@@ -85,4 +85,12 @@ public class MainActivity extends AppCompatActivity {
             Toast.makeText(this, "No match found", Toast.LENGTH_SHORT).show();
         }
     }
+
+    public void deleteAllProducts(View view) {
+        dbHandler.deleteAllProducts();
+        idView.setText("");
+        nameEdit.setText("");
+        skuEdit.setText("");
+        Toast.makeText(this, "All products deleted!", Toast.LENGTH_SHORT).show();
+    }
 }
