@@ -10,10 +10,10 @@ public class MyDBHandler extends SQLiteOpenHelper {
 
     private static final int DATABASE_VERSION = 1;
     private static final String DATABASE_NAME = "productDB.db";
-    public static final String TABLE_PRODUCTS = "products";
-    public static final String COLUMN_ID = "_id";
-    public static final String COLUMN_PRODUCTNAME = "productname";
-    public static final String COLUMN_SKU = "SKU";
+    private static final String TABLE_PRODUCTS = "products";
+    private static final String COLUMN_ID = "_id";
+    private static final String COLUMN_PRODUCT_NAME = "productName";
+    private static final String COLUMN_SKU = "SKU";
 
     public MyDBHandler(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -23,7 +23,7 @@ public class MyDBHandler extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         String CREATE_TABLE = "CREATE TABLE " + TABLE_PRODUCTS + "("
                 + COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
-                + COLUMN_PRODUCTNAME + " TEXT,"
+                + COLUMN_PRODUCT_NAME + " TEXT,"
                 + COLUMN_SKU + " INTEGER" + ")";
         db.execSQL(CREATE_TABLE);
     }
@@ -37,7 +37,7 @@ public class MyDBHandler extends SQLiteOpenHelper {
     public void addProduct(Product product) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
-        values.put(COLUMN_PRODUCTNAME, product.getProductName());
+        values.put(COLUMN_PRODUCT_NAME, product.getProductName());
         values.put(COLUMN_SKU, product.getSku());
         db.insert(TABLE_PRODUCTS, null, values);
         db.close();
@@ -45,23 +45,34 @@ public class MyDBHandler extends SQLiteOpenHelper {
 
     public Product findProduct(String productName) {
         SQLiteDatabase db = this.getReadableDatabase();
-        String query = "SELECT * FROM " + TABLE_PRODUCTS + " WHERE " + COLUMN_PRODUCTNAME + " = \"" + productName + "\"";
+        String query = "SELECT * FROM " + TABLE_PRODUCTS + " WHERE " + COLUMN_PRODUCT_NAME + " = '" + productName + "'";
         Cursor cursor = db.rawQuery(query, null);
         Product product = null;
         if (cursor.moveToFirst()) {
             product = new Product();
-            product.setID(Integer.parseInt(cursor.getString(0)));
+            product.setId(Integer.parseInt(cursor.getString(0)));   // ← ici : setId (pas setID)
             product.setProductName(cursor.getString(1));
             product.setSku(Integer.parseInt(cursor.getString(2)));
         }
+        cursor.close();
         db.close();
         return product;
     }
 
     public boolean deleteProduct(String productName) {
         SQLiteDatabase db = this.getWritableDatabase();
-        int result = db.delete(TABLE_PRODUCTS, COLUMN_PRODUCTNAME + " = ?", new String[]{productName});
+        int result = db.delete(TABLE_PRODUCTS, COLUMN_PRODUCT_NAME + " = ?", new String[]{productName});
         db.close();
         return result > 0;
+    }
+
+    public boolean updateProduct(Product product) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(COLUMN_PRODUCT_NAME, product.getProductName());
+        values.put(COLUMN_SKU, product.getSku());
+        int rows = db.update(TABLE_PRODUCTS, values, COLUMN_ID + " = ?", new String[]{String.valueOf(product.getId())});
+        db.close();
+        return rows > 0;
     }
 }

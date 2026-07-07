@@ -1,39 +1,41 @@
 package com.example.lab5;
 
 public class Product {
-    private int _id;
-    private String _productname;
-    private int _sku;
+    private int id;
+    private String productName;
+    private int sku;
 
-    public Product() {
-    }
-    public Product(int id, String productname, int sku) {
-        _id = id;
-        _productname = productname;
-        _sku = sku;
-        //12345
-    }
-    public Product(String productname, int sku) {
-        _productname = productname;
-        _sku = sku;
+    // Constructeur par défaut
+    public Product() {}
+
+    // Constructeur avec paramètres
+    public Product(String productName, int sku) {
+        this.productName = productName;
+        this.sku = sku;
     }
 
-    public void setID(int id) {
-        _id = id;
+    // Getters et setters
+    public int getId() {
+        return id;
     }
-    public int getID() {
-        return _id;
+
+    public void setId(int id) {
+        this.id = id;
     }
-    public void setProductName(String productname) {
-        _productname = productname;
-    }
+
     public String getProductName() {
-        return _productname;
+        return productName;
     }
-    public void setSku(int sku) {
-        _sku = sku;
+
+    public void setProductName(String productName) {
+        this.productName = productName;
     }
+
     public int getSku() {
-        return _sku;
+        return sku;
+    }
+
+    public void setSku(int sku) {
+        this.sku = sku;
     }
 }
