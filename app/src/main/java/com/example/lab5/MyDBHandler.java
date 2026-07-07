@@ -75,4 +75,10 @@ public class MyDBHandler extends SQLiteOpenHelper {
         db.close();
         return rows > 0;
     }
+
+    public void deleteAllProducts() {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.delete(TABLE_PRODUCTS, null, null);
+        db.close();
+    }
 }
