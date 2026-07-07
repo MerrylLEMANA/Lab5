@@ -45,12 +45,12 @@ public class MyDBHandler extends SQLiteOpenHelper {
 
     public Product findProduct(String productName) {
         SQLiteDatabase db = this.getReadableDatabase();
-        String query = "SELECT * FROM " + TABLE_PRODUCTS + " WHERE " + COLUMN_PRODUCT_NAME + " = \"" + productName + "\"";
+        String query = "SELECT * FROM " + TABLE_PRODUCTS + " WHERE " + COLUMN_PRODUCT_NAME + " = '" + productName + "'";
         Cursor cursor = db.rawQuery(query, null);
         Product product = null;
         if (cursor.moveToFirst()) {
             product = new Product();
-            product.setID(Integer.parseInt(cursor.getString(0)));
+            product.setId(Integer.parseInt(cursor.getString(0)));   // ← ici : setId (pas setID)
             product.setProductName(cursor.getString(1));
             product.setSku(Integer.parseInt(cursor.getString(2)));
         }
